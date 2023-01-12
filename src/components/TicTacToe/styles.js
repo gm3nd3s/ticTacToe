@@ -15,11 +15,11 @@ export const TableStyled = styled.tbody`
 	align-self: center;
 	margin: auto;
 	border-radius: 10px;
-	background-color: black;
 	display: grid;
 	grid-template-rows: 1fr 1fr 1fr;
 	gap: 10px;
 	padding: 10px;
+	background-color: darkgray;
 
 	td {
 		display: grid;
@@ -30,9 +30,9 @@ export const TableStyled = styled.tbody`
 		width: 200px;
 		height: 200px;
 		overflow: hidden;
-		background-color: white;
+
 		font-size: large;
-		color: black;
+
 		text-align: center;
 		font-size: 80px;
 		padding: 0;
