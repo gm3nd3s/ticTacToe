@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 import { Provider } from 'react-redux';
 
-import { Game, Dashboard } from './components';
+import { Game, Dashboard, Title } from './components';
+
 import { store } from './store';
 
 const AppStyled = styled.main`
@@ -17,6 +18,7 @@ function App() {
 	return (
 		<Provider store={store}>
 			<AppStyled>
+				<Title />
 				<Dashboard />
 				<Game />
 			</AppStyled>

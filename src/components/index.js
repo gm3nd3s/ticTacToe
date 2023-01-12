@@ -1,3 +1,4 @@
-import { Game } from './TicTacToe';
+import { Game } from './Table';
 import { Dashboard } from './Dashboard';
-export { Game, Dashboard };
+import { Title } from './Title';
+export { Game, Dashboard, Title };

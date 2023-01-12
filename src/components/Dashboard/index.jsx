@@ -13,14 +13,29 @@ const Reset = styled.button`
 	:focus {
 		outline: none;
 	}
+	@media screen and (max-width: 768px) {
+		width: 130px;
+		height: 36px;
+		font-size: 16px;
+		padding: 1%;
+	}
 `;
 const DashboardStyle = styled.div`
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
 	align-items: center;
-	margin: 1rem 0;
+	margin: 10px auto;
+	border-radius: 10px;
+	width: 60%;
+	padding: 10px 0;
+
+	h2 {
+		padding: 0;
+		margin: 0;
+	}
 `;
+
 const Score = styled.div`
 	display: flex;
 	flex-direction: row;
@@ -49,6 +64,7 @@ const ScoreWrapperRight = styled.div`
 	gap: 6px;
 	width: 140px;
 `;
+
 export const Dashboard = () => {
 	const score = useSelector((state) => state.score);
 	const dispatch = useDispatch();

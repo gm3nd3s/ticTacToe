@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { invert } from '../../features/icon/iconSlice';
 import { incrementP1, incrementP2 } from '../../features/score/scoreSlice';
 
-import { Wrapper, TableStyled, PlayAgain, PlayerTurn } from './styles';
+import { Wrapper, TableStyled, PlayAgain, PlayerTurn, PlayerChoice, Icon, SmallIcon } from './styles';
 
 let combinations = [
 	[0, 1, 2],
@@ -22,6 +22,7 @@ export const Game = () => {
 	const [player1, setPlayer1] = useState(true);
 	const [boardMoves, setBoardMoves] = useState(Array(9).fill(''));
 	const score = useSelector((state) => state.score);
+	const icon = useSelector((state) => state.icon);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -38,12 +39,43 @@ export const Game = () => {
 		}
 	}, [player1]);
 
+	const changeIcon = () => {
+		dispatch(invert());
+		resetBoard();
+	};
 	const verifyNull = () => {
 		for (let index = 0; index < boardMoves.length; index++) {
 			if (boardMoves[index] !== 'X' && boardMoves[index] !== 'O') return true;
 		}
 		return false;
 	};
+
+	const resetBoard = () => {
+		setPlayer1(true);
+		setBoardMoves(Array(9).fill(''));
+	};
+
+	const verifyWinner = () => {
+		combinations.forEach((combo) => {
+			if (
+				boardMoves[combo[0]] === icon.player1 &&
+				boardMoves[combo[1]] === icon.player1 &&
+				boardMoves[combo[2]] === icon.player1
+			) {
+				resetBoard();
+				dispatch(incrementP1());
+			}
+			if (
+				boardMoves[combo[0]] === icon.player2 &&
+				boardMoves[combo[1]] === icon.player2 &&
+				boardMoves[combo[2]] === icon.player2
+			) {
+				resetBoard();
+				dispatch(incrementP2());
+			}
+		});
+	};
+
 	const computerPlay = () => {
 		if (!verifyNull()) {
 			resetBoard();
@@ -54,30 +86,13 @@ export const Game = () => {
 		const random = getRandomInt(boardMoves.length);
 
 		if (boardMoves[random] === '') {
-			temp[random] = 'O';
+			temp[random] = icon.player2;
 			setBoardMoves(temp);
 			setPlayer1(!player1);
+			verifyWinner();
 		} else {
 			computerPlay();
 		}
-	};
-
-	const resetBoard = () => {
-		setPlayer1(true);
-		setBoardMoves(Array(9).fill(''));
-	};
-
-	const verifyWinner = () => {
-		combinations.forEach((combo) => {
-			if (boardMoves[combo[0]] === 'X' && boardMoves[combo[1]] === 'X' && boardMoves[combo[2]] === 'X') {
-				dispatch(incrementP1());
-				resetBoard();
-			}
-			if (boardMoves[combo[0]] === 'O' && boardMoves[combo[1]] === 'O' && boardMoves[combo[2]] === 'O') {
-				dispatch(incrementP2());
-				resetBoard();
-			}
-		});
 	};
 
 	const handleClick = (i) => {
@@ -87,7 +102,7 @@ export const Game = () => {
 				return;
 			} else {
 				let temp = [...boardMoves];
-				temp[i] = player1 ? 'X' : 'O';
+				temp[i] = player1 ? icon.player1 : icon.player2;
 				setBoardMoves(temp);
 				setPlayer1(!player1);
 				verifyWinner();
@@ -106,6 +121,19 @@ export const Game = () => {
 	return (
 		<>
 			<Wrapper>
+				<PlayerChoice>
+					<tr>
+						<td>
+							<p>Choose your icon</p>
+						</td>
+						<td>
+							<Icon>{icon.player1}</Icon>
+						</td>
+						<td>
+							<SmallIcon onClick={() => changeIcon()}>{icon.player2}</SmallIcon>
+						</td>
+					</tr>
+				</PlayerChoice>
 				<TableStyled>
 					<tr>
 						<td>
@@ -130,10 +158,14 @@ export const Game = () => {
 					</tr>
 				</TableStyled>
 				<PlayerTurn>
-					<p>Player turn: {player1 ? 'Player' : 'Computer'}</p>
+					<tr>
+						<td>
+							<p>Player turn: {player1 ? 'Player' : 'Computer'}</p>
+						</td>
+					</tr>
 				</PlayerTurn>
 			</Wrapper>
-			<PlayAgain onClick={resetBoard}>Let's play again!</PlayAgain>
+			<PlayAgain onClick={resetBoard}>Reset board</PlayAgain>
 		</>
 	);
 };
