@@ -43,6 +43,7 @@ export const Game = () => {
 		dispatch(invert());
 		resetBoard();
 	};
+
 	const verifyNull = () => {
 		for (let index = 0; index < boardMoves.length; index++) {
 			if (boardMoves[index] !== 'X' && boardMoves[index] !== 'O') return true;
@@ -103,6 +104,7 @@ export const Game = () => {
 			} else {
 				let temp = [...boardMoves];
 				temp[i] = player1 ? icon.player1 : icon.player2;
+
 				setBoardMoves(temp);
 				setPlayer1(!player1);
 				verifyWinner();
