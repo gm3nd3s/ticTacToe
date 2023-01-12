@@ -129,10 +129,10 @@ export const Game = () => {
 						</td>
 					</tr>
 				</TableStyled>
+				<PlayerTurn>
+					<p>Player turn: {player1 ? 'Player' : 'Computer'}</p>
+				</PlayerTurn>
 			</Wrapper>
-			<PlayerTurn>
-				<p>Player turn: {player1 ? 'Player' : 'Computer'}</p>
-			</PlayerTurn>
 			<PlayAgain onClick={resetBoard}>Let's play again!</PlayAgain>
 		</>
 	);

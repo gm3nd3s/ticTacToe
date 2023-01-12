@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.table`
-	width: 70vw;
+	width: fit-content;
 	height: auto;
 	margin: 0 auto;
 	align-self: center;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 `;
 
@@ -52,6 +53,6 @@ export const PlayAgain = styled.button`
 export const PlayerTurn = styled.div`
 	display: flex;
 	align-items: flex-start;
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 `;
